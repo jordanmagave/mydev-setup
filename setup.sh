@@ -151,29 +151,37 @@ print_success "Fontes instaladas!"
 # Instalar plugins do Zsh
 print_status "Instalando plugins do Zsh..."
 
+# Função auxiliar para instalar plugin Zsh
+install_zsh_plugin() {
+    local plugin_name="$1"
+    local plugin_url="$2"
+    local plugin_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/${plugin_name}"
+
+    if [ -d "$plugin_dir" ]; then
+        # Verifica se é um repositório git válido
+        if [ -d "$plugin_dir/.git" ]; then
+            print_warning "${plugin_name} já está instalado"
+            return 0
+        else
+            # Diretório existe mas não é um repositório git válido, remove e reinstala
+            print_warning "${plugin_name} está em estado inválido, removendo e reinstalando..."
+            rm -rf "$plugin_dir"
+        fi
+    fi
+
+    # Instala o plugin
+    git clone "$plugin_url" "$plugin_dir"
+    print_success "${plugin_name} instalado!"
+}
+
 # zsh-autosuggestions
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    print_success "zsh-autosuggestions instalado!"
-else
-    print_warning "zsh-autosuggestions já está instalado"
-fi
+install_zsh_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 
 # zsh-syntax-highlighting
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    print_success "zsh-syntax-highlighting instalado!"
-else
-    print_warning "zsh-syntax-highlighting já está instalado"
-fi
+install_zsh_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 
 # zsh-histdb
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-histdb" ]; then
-    git clone https://github.com/larkery/zsh-histdb ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-histdb
-    print_success "zsh-histdb instalado!"
-else
-    print_warning "zsh-histdb já está instalado"
-fi
+install_zsh_plugin "zsh-histdb" "https://github.com/larkery/zsh-histdb"
 
 # Instalar ferramentas CLI modernas
 print_status "Instalando ferramentas CLI modernas..."
