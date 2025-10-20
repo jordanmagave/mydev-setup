@@ -152,21 +152,27 @@ print_success "Fontes instaladas!"
 print_status "Instalando plugins do Zsh..."
 
 # zsh-autosuggestions
-if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     print_success "zsh-autosuggestions instalado!"
+else
+    print_warning "zsh-autosuggestions já está instalado"
 fi
 
 # zsh-syntax-highlighting
-if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     print_success "zsh-syntax-highlighting instalado!"
+else
+    print_warning "zsh-syntax-highlighting já está instalado"
 fi
 
 # zsh-histdb
-if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-histdb" ]; then
-    git clone https://github.com/larkery/zsh-histdb ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-histdb
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-histdb" ]; then
+    git clone https://github.com/larkery/zsh-histdb ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-histdb
     print_success "zsh-histdb instalado!"
+else
+    print_warning "zsh-histdb já está instalado"
 fi
 
 # Instalar ferramentas CLI modernas
